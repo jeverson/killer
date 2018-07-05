@@ -63,6 +63,14 @@ namespace NumberToWords.Tests
             RunAndAssert(number, words);
         }
 
+        [Theory]
+        [InlineData(1000001, "Um Milhão e Um")]
+        [InlineData(2000001, "Dois Milhões e Um")]
+        [InlineData(99999999, "Noventa e Nove Milhões Novecentos e Noventa e Nove Mil Novecentos e Noventa e Nove")]
+        public void Convert_WhenReceivingMillionsOrBillions_ShouldReturn(int number, string words) {
+            RunAndAssert(number, words);
+        }
+
         private void RunAndAssert(int number, string words) {
             var result = _sut.Convert(number);
             Assert.Equal(words, result);
