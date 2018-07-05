@@ -19,6 +19,6 @@ namespace NumberToWords
         
         public string Convert(int number) => _plurals[number];
 
-        public bool IsPlural(int number, int times) => times > 1;
+        public bool IsPlural(int times) => times > 1;
     }
 }

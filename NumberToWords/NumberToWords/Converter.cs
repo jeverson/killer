@@ -24,22 +24,25 @@ namespace NumberToWords
 
         private string ConvertNumber(int number) {
 
-            var higherNumber = _simpleNumbers.Closest(number);            
-            var howManyTimes = number / higherNumber;
-            var remaining = number % higherNumber;
+            var closestSimpleNumber = _simpleNumbers.Closest(number);            
+            var howManyTimes = number / closestSimpleNumber;
+            var remainder = number % closestSimpleNumber;
             
-            if (remaining == 0) 
-                return GetWord(higherNumber, howManyTimes);
+            if (remainder == 0) 
+                return GetWord(closestSimpleNumber, howManyTimes);
             
-            var remainingWords = AddAndIfApplicable(higherNumber, remaining) + Convert(remaining);
-            return $"{GetWord(higherNumber, howManyTimes)} {remainingWords}";
+            var remainingWords = 
+                AddAndIfApplicable(closestSimpleNumber, remainder) + 
+                Convert(remainder);
+                
+            return $"{GetWord(closestSimpleNumber, howManyTimes)} {remainingWords}";
         }
 
         private string AddAndIfApplicable(int number, int remaining) => 
             (remaining <= 100) ? "e " : "";
 
         private string GetWord(int number, int times) =>
-                (times > 1) ? 
+                _plurals.IsPlural(times) ? 
                 $"{Convert(times)} {GetPlural(number)}" :
                 GetSimpleWord(number);
 
